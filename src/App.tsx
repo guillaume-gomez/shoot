@@ -2,13 +2,13 @@
 function App() {
 
   return (
-    <div>
-      <p>Pressez Entrée lorsque que le mot <b>Shoot</b> apparait</p>
+    <div className="h-screen" style={{border: "2px solid red"}}>
+      <p className="absolute top-2/4 text-center w-full text-5xl">Pressez Entrée lorsque que le mot <b>Shoot</b> apparait</p>
 
 
-      <div>
+      <p className="absolute bottom-1/4 text-center w-full text-xl">
         Fait par <a href="">Guillaume Gomez</a>
-      </div>
+      </p>
     </div>
   )
 }
