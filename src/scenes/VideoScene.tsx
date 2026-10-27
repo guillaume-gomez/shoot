@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import SoundButton from "../components/SoundButton";
 
 const videosUrl =[
@@ -11,12 +11,14 @@ const videosUrl =[
 function VideoScene() {
   const currentIndex =  useRef<number>(0);
   const videoRef = useRef<HTMLMediaElement>();
+  const textRef = useRef<HTMLDivElement>();
+
 
   useEffect(() => {
     function keyPressed() {
 
       loadVideo(videosUrl[currentIndex.current]);
-      
+
       handlePlayButton();
     }
     document.addEventListener('keydown', keyPressed, true);
@@ -29,18 +31,21 @@ function VideoScene() {
 
   }, []);
 
-  useEffect(() => {
-    if(videoRef.current) {
-
-     videoRef.current.loadedmetadata = onLoadVideo;
-     loadVideo(videosUrl[currentIndex.current]);
-
-     currentIndex.current += 1;
-    }
-  },[videoRef.current]);
-
   function onLoadVideo(event: any) {
     console.log(event)
+    
+    videoRef.current.style.display = "block";
+    textRef.current.style.display = "none";
+
+    event.target.play();
+         
+  }
+
+  function onEndedVideo() {
+    console.log("c'est fini")
+    
+    videoRef.current.style.display = "none";   
+    textRef.current.style.display = "block";   
   }
 
   function loadVideo(path: string) {
@@ -49,48 +54,56 @@ function VideoScene() {
     }
 
     videoRef.current.src = path;
-    videoRef.current.load()
-  }
+    videoRef.current.load();
 
-  async function playVideo() {
-    try {
-      if(!videoRef.current.duration) {
-        return;
-      }
-
-      await videoRef.current.play();
-    } catch (err) {
-      console.log("Error cannot play video")
-    }
+    //prepare next video
+    currentIndex.current += 1;
+    currentIndex.current = currentIndex.current % videosUrl.length;
   }
 
   function handlePlayButton() {
-    if (videoRef.current.paused) {
-      playVideo();
-    } else {
-      videoRef.current.pause();
+    if (videoRef.current) {
+      console.log(videoRef.current.style.zIndex)
     }
   }
   
-
 	return (
     <div 
       className="h-screen"
-      style={{border: "2px solid blue", zIndex: 2}}
+      style={{border: "2px solid blue"}}
     >
-      <div className="absolute top-2.5 right-2.5">
+      <div className="absolute top-2.5 right-2.5" style={{zIndex: 2}}>
         <SoundButton />
       </div>
 
-      <p className="absolute top-2/4 text-center w-full text-5xl" style={{zIndex: 2}}><b>Shoot</b></p>
+      <p
+      className="absolute top-2/4 text-center w-full text-8xl"
+      style={{zIndex: 2}}
+      ref={textRef}
+      >
+        <b>Shoot</b>
+      </p>
+
+      <div
+        className="absolute bottom-2.5 right-2.5 card-xs shadow-sm bg-primary"
+        style={{zIndex: 2}}
+      >
+        <div className="card-body">
+          Source: {videosUrl[currentIndex.current]}
+        </div>
+      </div>
+      
+
       <video 
         ref={videoRef}
         preload="none"
-       // src="/108070-680697398_medium.mp4"
+        muted // to load the video
         type="video/mp4"
-        className="absolute w-full h-screen min-w-full min-h-full"
+        className="absolute w-full h-screen min-w-full min-h-full d-none"
         style={{width: "auto", height: "auto"}}
-        controls
+        //controls
+        onLoadedMetadata={onLoadVideo}
+        onEnded={onEndedVideo}
       >
       </video>
     </div>
