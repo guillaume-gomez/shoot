@@ -1,5 +1,6 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useContext } from "react";
 import SoundButton from "../components/SoundButton";
+import { SoundContext } from "../contexts/SoundContextWrapper";
 
 const videosUrl =[
   "/108070-680697398_medium.mp4",
@@ -12,6 +13,8 @@ function VideoScene() {
   const currentIndex =  useRef<number>(0);
   const videoRef = useRef<HTMLMediaElement>();
   const textRef = useRef<HTMLDivElement>();
+
+  const { hasSound } = useContext(SoundContext);
 
 
   useEffect(() => {
@@ -31,21 +34,26 @@ function VideoScene() {
 
   }, []);
 
+  useEffect(() => {
+    if(hasSound) {
+      videoRef.current.muted = false;
+    } else {
+      videoRef.current.muted = true;
+    }
+  }, [hasSound])
+
   function onLoadVideo(event: any) {
     console.log(event)
     
-    videoRef.current.style.display = "block";
-    textRef.current.style.display = "none";
-
+    toggleItems(true);
     event.target.play();
          
   }
 
   function onEndedVideo() {
     console.log("c'est fini")
-    
-    videoRef.current.style.display = "none";   
-    textRef.current.style.display = "block";   
+
+    toggleItems(false);
   }
 
   function loadVideo(path: string) {
@@ -55,16 +63,22 @@ function VideoScene() {
 
     videoRef.current.src = path;
     videoRef.current.load();
+    videoRef.current.muted = false;
 
     //prepare next video
     currentIndex.current += 1;
     currentIndex.current = currentIndex.current % videosUrl.length;
   }
 
-  function handlePlayButton() {
-    if (videoRef.current) {
-      console.log(videoRef.current.style.zIndex)
+  function toggleItems(showVideo:boolean): void {
+    if(showVideo) {
+      videoRef.current.style.display = "block";
+      textRef.current.style.display = "none";
+    } else {
+      videoRef.current.style.display = "none";
+      textRef.current.style.display = "block";
     }
+    
   }
   
 	return (
