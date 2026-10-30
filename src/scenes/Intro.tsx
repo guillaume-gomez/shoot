@@ -7,7 +7,13 @@ function Intro() {
         <SoundButton />
       </div>
 
-      <p className="absolute top-2/4 text-center w-full text-5xl">Pressez Entrée lorsque que le mot <b>Shoot</b> apparait</p>
+      <p className="absolute top-2/4 text-center w-full text-5xl">
+        Pressez
+        <span className="px-2">
+          <kbd className="kbd kbd-xl">Entrée</kbd>
+        </span>
+        lorsque que le mot <b>Shoot</b> apparait
+      </p>
 
 
       <p className="absolute bottom-1/4 text-center w-full text-xl">
