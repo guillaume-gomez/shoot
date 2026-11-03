@@ -1,6 +1,7 @@
-import { useEffect, useRef, useMemo, useContext } from "react";
+import { useEffect, useRef, useMemo, useContext, useState } from "react";
 import SoundButton from "../components/SoundButton";
 import { SoundContext } from "../contexts/SoundContextWrapper";
+import ShootItem from "../components/ShootItem";
 
 const videosUrl =[
   "/108070-680697398_medium.mp4",
@@ -12,17 +13,20 @@ const videosUrl =[
 function VideoScene() {
   const currentIndex =  useRef<number>(0);
   const videoRef = useRef<HTMLMediaElement>();
-  const textRef = useRef<HTMLDivElement>();
+  const [visibleText, setTextVisible] = useState<boolean>(true);
 
   const { hasSound } = useContext(SoundContext);
 
 
   useEffect(() => {
     function keyPressed() {
+      if(!videoRef.current.paused) {
+        return;
+      }
 
       loadVideo(videosUrl[currentIndex.current]);
 
-      handlePlayButton();
+      //handlePlayButton();
     }
     document.addEventListener('keydown', keyPressed, true);
     
@@ -73,10 +77,10 @@ function VideoScene() {
   function toggleItems(showVideo:boolean): void {
     if(showVideo) {
       videoRef.current.style.display = "block";
-      textRef.current.style.display = "none";
+      setTextVisible(false);
     } else {
       videoRef.current.style.display = "none";
-      textRef.current.style.display = "block";
+      setTextVisible(true);
     }
     
   }
@@ -90,13 +94,12 @@ function VideoScene() {
         <SoundButton />
       </div>
 
-      <p
-      className="absolute top-2/4 text-center w-full text-8xl"
+      <div
+      className="absolute top-2/4 text-center w-full"
       style={{zIndex: 2}}
-      ref={textRef}
       >
-        <b>Shoot</b>
-      </p>
+        <ShootItem display={visibleText} />
+      </div>
 
       <div
         className="absolute bottom-2.5 right-2.5 card-xs shadow-sm bg-primary"
