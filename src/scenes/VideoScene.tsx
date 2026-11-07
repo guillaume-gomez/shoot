@@ -28,7 +28,7 @@ function VideoScene() {
 
       //handlePlayButton();
     }
-    document.addEventListener('keydown', keyPressed, true);
+    document.addEventListener('keydown', keyPressed);
     
 
     return () => {
@@ -62,6 +62,10 @@ function VideoScene() {
 
   function loadVideo(path: string) {
     if(!videoRef.current) {
+      return;
+    }
+
+    if(!videoRef.current.paused) {
       return;
     }
 
