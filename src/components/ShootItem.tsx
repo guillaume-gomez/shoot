@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { SoundContext } from "../contexts/SoundContextWrapper";
 import { useSpring, animated, easings } from '@react-spring/web';
 import useWithSound from "../customHooks/useWithSound";
 import message from '/message.mp3';
@@ -8,12 +10,17 @@ interface ShootItemProps {
 
 function ShootItem({ display } : ShootItemProps) {
   const { playSound } = useWithSound(message);
+  const { hasSound } = useContext(SoundContext);
 
   const springs = useSpring({
     ...display ? 
       { scale: 2, opacity: 1 }:
       { scale: 0, opacity: 0 },
-    onStart: () => { playSound() },
+    onStart: () => { 
+      if(hasSound) {
+        playSound();
+      }
+    },
     config: { duration: 250, easing: easings.easeOutCirc },
   });
 

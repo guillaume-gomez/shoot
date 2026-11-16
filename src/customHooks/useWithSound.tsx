@@ -7,7 +7,7 @@ interface UseSoundReturn {
   setVolume: (volume: number) => void;
 }
 
-function useWithSound(audioSource : AudioSource): UseSoundReturn {
+export default function useWithSound(audioSource : AudioSource): UseSoundReturn {
   const soundRef = useRef<Audio| undefined>(undefined);
 
   useEffect(() => {

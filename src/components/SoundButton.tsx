@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { SoundContext } from "../contexts/SoundContextWrapper";
 
 function SoundButton() {
-	const {
+  const {
     hasSound,
     setHasSound,
   } = useContext(SoundContext);
