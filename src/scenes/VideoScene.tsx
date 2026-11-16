@@ -23,7 +23,6 @@ function VideoScene() {
       if(!videoRef.current.paused) {
         return;
       }
-
       loadVideo(videosUrl[currentIndex.current]);
 
       //handlePlayButton();
@@ -118,7 +117,7 @@ function VideoScene() {
       <video 
         ref={videoRef}
         preload="none"
-        muted // to load the video
+        muted // to autoplay the video
         type="video/mp4"
         className="absolute w-full h-screen min-w-full min-h-full d-none"
         style={{width: "auto", height: "auto"}}
