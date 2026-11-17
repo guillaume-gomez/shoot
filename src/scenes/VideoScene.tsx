@@ -2,13 +2,8 @@ import { useEffect, useRef, useMemo, useContext, useState } from "react";
 import SoundButton from "../components/SoundButton";
 import { SoundContext } from "../contexts/SoundContextWrapper";
 import ShootItem from "../components/ShootItem";
+import videoData from "../assets/VideoData"; 
 
-const videosUrl =[
-  "/108070-680697398_medium.mp4",
-  "/20063221-uhd_3840_2160_24fps.mp4",
-  "/4990250-hd_1920_1080_30fps.mp4",
-  "/7609195-uhd_3840_2160_25fps.mp4",
-]
 
 function VideoScene() {
   const currentIndex =  useRef<number>(0);
@@ -23,13 +18,12 @@ function VideoScene() {
       if(!videoRef.current.paused) {
         return;
       }
-      loadVideo(videosUrl[currentIndex.current]);
+      loadVideo(videoData[currentIndex.current].url);
 
       //handlePlayButton();
     }
     document.addEventListener('keydown', keyPressed);
     
-
     return () => {
         document.removeEventListener('keydown', keyPressed);
         document.removeEventListener("loadedmetadata", onLoadVideo)
@@ -74,7 +68,7 @@ function VideoScene() {
 
     //prepare next video
     currentIndex.current += 1;
-    currentIndex.current = currentIndex.current % videosUrl.length;
+    currentIndex.current = currentIndex.current % videoData.length;
   }
 
   function toggleItems(showVideo:boolean): void {
@@ -109,7 +103,9 @@ function VideoScene() {
         style={{zIndex: 2}}
       >
         <div className="card-body">
-          Source: {videosUrl[currentIndex.current]}
+          <p className="text-base">
+            Source: {videoData[currentIndex.current].source}
+          </p>
         </div>
       </div>
       
