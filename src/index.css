@@ -1,2 +1,192 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@font-face {
+  font-family: "Marianne-Bold";
+  src: local("Marianne-Bold"),
+    url("/fonts/Marianne-Bold.ttf") format("truetype");
+}
+
+
+@layer base {
+  html {
+    font-family: Marianne-Bold, Arial;
+  }
+}
+
+
+/* FOG ANIMATION */
+
+.fog {
+  width: 200%;
+  height: 100%;
+  position: absolute;
+}
+
+/* TODO REPLACE DUPLICATED CODE */
+.fog-image {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+
+#foglayer_01 {
+  animation: foglayer_01_opacity 10s linear infinite, foglayer_moveme 15s linear infinite;
+  -webkit-animation: foglayer_01_opacity 10s linear infinite, foglayer_moveme 15s linear infinite;
+}
+#foglayer_01 .image01, #foglayer_01 .image02 {
+  background: url("fog1.png") repeat-x top left transparent;
+  background-size: 100%;
+  
+}
+
+#foglayer_02 {
+  animation: foglayer_02_opacity 21s linear infinite,
+				foglayer_moveme 13s linear infinite;
+  -webkit-animation: foglayer_01_opacity 21s linear infinite,
+				foglayer_moveme 13s linear infinite;
+}
+#foglayer_02 .image01, #foglayer_02 .image02 {
+  background: url("fog2.png") repeat-x top left transparent;
+  background-size: 100%;
+ 
+}
+
+#foglayer_03 {
+  animation: foglayer_02_opacity 21s linear infinite,
+				foglayer_moveme 13s linear infinite;
+  -webkit-animation: foglayer_01_opacity 21s linear infinite,
+				foglayer_moveme 13s linear infinite;
+}
+#foglayer_03 .image01, #foglayer_03 .image02 {
+  background: url("fog2.png") repeat-x top left transparent;
+  background-size: 100%;
+}
+
+@keyframes foglayer_01_opacity {
+  0% {
+    opacity: .1;
+  }
+  22% {
+    opacity: .5;
+  }
+  40% {
+    opacity: .28;
+  }
+  58% {
+    opacity: .4;
+  }
+  80% {
+    opacity: .16;
+  }
+  100% {
+    opacity: .1;
+  }
+}
+@-webkit-keyframes foglayer_01_opacity {
+  0% {
+    opacity: .1;
+  }
+  22% {
+    opacity: .5;
+  }
+  40% {
+    opacity: .28;
+  }
+  58% {
+    opacity: .4;
+  }
+  80% {
+    opacity: .16;
+  }
+  100% {
+    opacity: .1;
+  }
+}
+
+@keyframes foglayer_02_opacity {
+  0% {
+    opacity: .5;
+  }
+  25% {
+    opacity: .2;
+  }
+  50% {
+    opacity: .1;
+  }
+  80% {
+    opacity: .3;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@-webkit-keyframes foglayer_02_opacity {
+  0% {
+    opacity: .5;
+  }
+  25% {
+    opacity: .2;
+  }
+  50% {
+    opacity: .1;
+  }
+  80% {
+    opacity: .3;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+
+@keyframes foglayer_03_opacity {
+  0% {
+    opacity: .8;
+  }
+  27% {
+    opacity: .2;
+  }
+  52% {
+    opacity: .6;
+  }
+  68% {
+    opacity: .3;
+  }
+  100% {
+    opacity: .8;
+  }
+}
+@-webkit-keyframes foglayer_03_opacity {
+  0% {
+    opacity: .8;
+  }
+  27% {
+    opacity: .2;
+  }
+  52% {
+    opacity: .6;
+  }
+  68% {
+    opacity: .3;
+  }
+  100% {
+    opacity: .8;
+  }
+}
+
+@keyframes foglayer_moveme {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+@-webkit-keyframes foglayer_moveme {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
